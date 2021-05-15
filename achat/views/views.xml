@@ -1,0 +1,61 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    
+    <record model="ir.ui.view" id="achat.list">
+      <field name="name">achat list</field>
+      <field name="model">achat.achat</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="article"/>
+          <field name="unite"/>
+          <field name="quantite"/>
+           <field name="valeur"/>
+        </tree>
+      </field>
+    </record>
+   
+
+    <!-- actions opening views on models -->
+    
+    <record model="ir.actions.act_window" id="achat.action_window">
+      <field name="name">achat window</field>
+      <field name="res_model">achat.achat</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+   
+
+    <!-- server action to the one above -->
+    
+    <record model="ir.actions.server" id="achat.action_server">
+      <field name="name">achat server</field>
+      <field name="model_id" ref="model_achat_achat"/>
+      <field name="state">code</field>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+   
+
+    <!-- Top menu item -->
+    
+    <menuitem name="achat" id="achat.menu_root"/>
+   
+    <!-- menu categories -->
+    
+    <menuitem name="Menu 1" id="achat.menu_1" parent="achat.menu_root"/>
+    <menuitem name="Menu 2" id="achat.menu_2" parent="achat.menu_root"/>
+   
+    <!-- actions -->
+    
+    <menuitem name="List" id="achat.menu_1_list" parent="achat.menu_1"
+              action="achat.action_window"/>
+    <menuitem name="Server to list" id="achat" parent="achat.menu_2"
+              action="achat.action_server"/>
+   
+  </data>
+</odoo>
